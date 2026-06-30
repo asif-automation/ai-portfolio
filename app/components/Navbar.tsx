@@ -11,16 +11,12 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
+  
   const [mobileOpen,  setMobileOpen]  = useState(false);
   const [activeId,    setActiveId]    = useState("");
 
   /* ── Scroll glass effect ── */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  
 
   /* ── Active section tracker ── */
   useEffect(() => {
@@ -73,10 +69,14 @@ const scrollTo = useCallback((href: string) => {
   }
 
   // All other sections
-  const y =
-    el.getBoundingClientRect().top +
-    window.pageYOffset -
-    64;
+const NAVBAR_HEIGHT = 64;
+const EXTRA_OFFSET = 52; // adjust this value if needed
+
+const y =
+  el.getBoundingClientRect().top +
+  window.pageYOffset -
+  NAVBAR_HEIGHT +
+  EXTRA_OFFSET;
 
   window.scrollTo({
     top: y,
@@ -86,27 +86,19 @@ const scrollTo = useCallback((href: string) => {
 
   return (
     <header
-      style={{
-        position:   "fixed",
-        top:        0,
-        left:       0,
-        right:      0,
-        zIndex:     100,
-        transition: "background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease",
-        backdropFilter:
-  scrolled || mobileOpen
-    ? "blur(16px)"
-    : "none",
-      
-        WebkitBackdropFilter:
-  scrolled || mobileOpen
-    ? "blur(16px)"
-    : "none",
-        borderBottom:
-  scrolled || mobileOpen
-    ? "1px solid rgba(255,255,255,0.06)"
-    : "1px solid transparent",
-      }}
+    style={{
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: 100,
+
+  background: "var(--bg)",
+
+  borderBottom: "1px solid rgba(255,255,255,0.06)",
+
+  transition: "border-color 0.25s ease",
+}}
     >
       <div className="container" style={{ paddingTop: 0, paddingBottom: 0 }}>
         <nav

@@ -1,5 +1,6 @@
 "use client";
-
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 interface Project {
@@ -133,8 +134,8 @@ const PROJECTS: Project[] = [
       "Vector Search",
       "Webhooks"
     ],
-    github: "#",
-    demo: "#",
+  github: "#",
+demo: "/projects/customer-support",
     category: "Completed Project",
     highlight: true,
     visual: null,
@@ -154,7 +155,7 @@ const PROJECTS: Project[] = [
     
   
   github: "#",
-    demo: "#",
+demo: "#",
     category: "In Development",
     highlight: false,
     visual: null,
@@ -260,7 +261,7 @@ export default function Projects() {
                 color:         "var(--text-1)",
               }}
             >
-              Production AI Automation Projects
+             AI Automation Projects
             </h2>
           </div>
           
@@ -295,8 +296,65 @@ export default function Projects() {
               {/* Accent bar (animated on hover via CSS) */}
               <div className="project-card-accent-bar" />
 
-              {/* Visual placeholder */}
-              <ProjectVisual index={idx} />
+              {/* Project image */}
+<div
+  style={{
+    aspectRatio: "16 / 9",
+    position: "relative",
+    overflow: "hidden",
+
+    background: "#050B16",
+    borderBottom: "1px solid var(--border)",
+
+    borderTopLeftRadius: "16px",
+    borderTopRightRadius: "16px",
+
+    boxShadow:
+      "inset 0 0 40px rgba(59,130,246,0.08), 0 20px 50px rgba(0,0,0,0.45)",
+  }}
+>
+  {idx === 0 ? (
+    <>
+      {/* Blue glow */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: "-30%",
+          background:
+            "radial-gradient(circle, rgba(59,130,246,0.16) 0%, transparent 70%)",
+          filter: "blur(80px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Image wrapper */}
+      <div
+        style={{
+          position: "absolute",
+          inset: "6px",
+          borderRadius: "12px",
+          overflow: "hidden",
+          boxShadow: "0 10px 35px rgba(0,0,0,.45)",
+        }}
+      >
+        <Image
+          src="/projects/customer-support/screenshots/01-n8n-workflow.png"
+          alt="AI Customer Support Email Automation Workflow"
+          fill
+          priority
+          quality={100}
+          style={{
+            objectFit: "contain",
+            background: "#050B16",
+          }}
+        />
+      </div>
+    </>
+  ) : (
+    <ProjectVisual index={idx} />
+  )}
+</div>
 
               {/* Content */}
               <div style={{ padding: "1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
@@ -358,7 +416,7 @@ export default function Projects() {
                 <div style={{ display: "flex", gap: "8px" }}>
                   
                              <a
-                    href="#"
+                    href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-sm btn-sm-ghost"
@@ -368,19 +426,26 @@ export default function Projects() {
                     </svg>
                     GitHub
                   </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-sm btn-sm-accent"
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                      <polyline points="15 3 21 3 21 9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    Preview
-                  </a>
+                  <Link
+  href={project.demo}
+  className="btn-sm btn-sm-accent"
+>
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </svg>
+  Preview
+</Link>
                 </div>
               </div>
             </article>
